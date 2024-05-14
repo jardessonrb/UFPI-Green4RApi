@@ -2,6 +2,7 @@ package com.jrblab.green4rapi.domain.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,5 +38,8 @@ public class Endereco extends EntityBase {
 
     @Column(nullable = false)
     private Double longitude;
+
+    @OneToOne(mappedBy = "endereco")
+    private Usuario usuario;
 
 }
