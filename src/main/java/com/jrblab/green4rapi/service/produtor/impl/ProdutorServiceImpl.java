@@ -30,7 +30,7 @@ public class ProdutorServiceImpl implements ProdutorService  {
 
     @Override
     public ProdutorDto criarProdutor(ProdutorForm produtorForm) {
-        Optional<Produtor> produtorOptional = produtorRepository.findByCpfEqualsOrUsuarioEmailUsuarioEqualsIgnoreCase(produtorForm.cpf(), produtorForm.usuario().emailUsuario());
+        Optional<Produtor> produtorOptional = produtorRepository.findByCpf(produtorForm.cpf());
         if(produtorOptional.isPresent()){
             throw new EntityAlreadyExistException("Produtor já existente para o CPF");
         }

@@ -12,5 +12,7 @@ public interface ProdutorRepository extends JpaRepository<Produtor, Long> {
 
     Optional<Produtor> findByCpfEqualsOrUsuarioEmailUsuarioEqualsIgnoreCase(String cpf, String email);
 
+    Optional<Produtor> findByCpf(String cpf);
+
     Optional<Produtor> findByUuid(UUID id);
 }
