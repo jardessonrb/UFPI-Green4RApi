@@ -1,24 +1,23 @@
 package com.jrblab.green4rapi.service.produtor.impl;
 
-import com.jrblab.green4rapi.domain.dto.in.EnderecoForm;
 import com.jrblab.green4rapi.domain.dto.in.ProdutorForm;
-import com.jrblab.green4rapi.domain.dto.in.UsuarioForm;
 import com.jrblab.green4rapi.domain.dto.out.ProdutorDto;
-import com.jrblab.green4rapi.domain.enums.TipoUsuario;
 import com.jrblab.green4rapi.domain.model.Endereco;
 import com.jrblab.green4rapi.domain.model.Produtor;
 import com.jrblab.green4rapi.domain.model.Usuario;
 import com.jrblab.green4rapi.domain.repository.ProdutorRepository;
 import com.jrblab.green4rapi.domain.repository.UsuarioRepository;
 import com.jrblab.green4rapi.service.produtor.ProdutorService;
-import com.jrblab.green4rapi.shared.handlerexception.exception.dto.EntityAlreadyExistException;
-import com.jrblab.green4rapi.shared.parsers.EnderecoParser;
-import com.jrblab.green4rapi.shared.parsers.ProdutorParser;
-import com.jrblab.green4rapi.shared.parsers.UsuarioParser;
+import com.jrblab.green4rapi.shared.handlerexception.exception.EntityAlreadyExistException;
+import com.jrblab.green4rapi.shared.handlerexception.exception.EntityNotFoundException;
+import com.jrblab.green4rapi.shared.parser.EnderecoParser;
+import com.jrblab.green4rapi.shared.parser.ProdutorParser;
+import com.jrblab.green4rapi.shared.parser.UsuarioParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProdutorServiceImpl implements ProdutorService  {
@@ -52,6 +51,24 @@ public class ProdutorServiceImpl implements ProdutorService  {
 
         return  ProdutorParser.toDto(produtor);
     }
+
+    @Override
+    public ProdutorDto buscarPorId(UUID id) {
+        Produtor produtor = buscarProdutor(id);
+
+        return ProdutorParser.toDto(produtor);
+    }
+
+    public Produtor buscarProdutor(UUID produtorId){
+        Produtor produtor = produtorRepository
+                .findByUuid(produtorId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Produtor não encontrado para o id "+produtorId)
+                );
+
+        return produtor;
+    }
+
 
     private Usuario salvarUsuario(ProdutorForm produtorForm){
         Endereco endereco = EnderecoParser.toModel(produtorForm.endereco());

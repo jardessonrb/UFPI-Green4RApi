@@ -1,6 +1,7 @@
 package com.jrblab.green4rapi.shared.handlerexception.handler;
 
 import com.jrblab.green4rapi.shared.handlerexception.exception.EntityAlreadyExistException;
+import com.jrblab.green4rapi.shared.handlerexception.exception.EntityNotFoundException;
 import com.jrblab.green4rapi.shared.handlerexception.exception.dto.ExceptionDefaultDto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -11,15 +12,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.Arrays;
 
 @RestControllerAdvice
-public class EntityAlreadyExistExceptionHandler {
+public class EntityNotFoundExceptionHandler {
 
-    @ResponseStatus(code = HttpStatus.CONFLICT)
-    @ExceptionHandler(EntityAlreadyExistException.class)
-    public ExceptionDefaultDto handle(EntityAlreadyExistException exception, HttpServletRequest request){
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ExceptionDefaultDto handle(EntityNotFoundException exception, HttpServletRequest request){
         return ExceptionDefaultDto
                 .builder()
                 .mensagem(exception.getMessage())
-                .statusCode(HttpStatus.CONFLICT.value())
+                .statusCode(HttpStatus.NOT_FOUND.value())
                 .erros(Arrays.asList(exception.getMessage()))
                 .path(request.getRequestURI())
                 .build();

@@ -1,4 +1,4 @@
-package com.jrblab.green4rapi.shared.parsers;
+package com.jrblab.green4rapi.shared.parser;
 
 import com.jrblab.green4rapi.domain.dto.in.EnderecoForm;
 import com.jrblab.green4rapi.domain.dto.out.EnderecoDto;

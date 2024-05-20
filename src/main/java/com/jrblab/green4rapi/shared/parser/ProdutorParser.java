@@ -1,14 +1,8 @@
-package com.jrblab.green4rapi.shared.parsers;
+package com.jrblab.green4rapi.shared.parser;
 
-import com.jrblab.green4rapi.domain.dto.in.EnderecoForm;
 import com.jrblab.green4rapi.domain.dto.in.ProdutorForm;
-import com.jrblab.green4rapi.domain.dto.in.UsuarioForm;
-import com.jrblab.green4rapi.domain.dto.out.EnderecoDto;
 import com.jrblab.green4rapi.domain.dto.out.ProdutorDto;
-import com.jrblab.green4rapi.domain.enums.TipoUsuario;
-import com.jrblab.green4rapi.domain.model.Endereco;
 import com.jrblab.green4rapi.domain.model.Produtor;
-import com.jrblab.green4rapi.domain.model.Usuario;
 
 public class ProdutorParser {
 

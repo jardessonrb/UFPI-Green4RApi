@@ -9,10 +9,7 @@ import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -33,5 +30,13 @@ public class ProdutorController {
         URI uri = uriComponentsBuilder.path("/produtor/{id}").buildAndExpand(produtorDto.getId()).toUri();
 
         return ResponseEntity.created(uri).body(produtorDto);
+    }
+
+    @Operation(description = "Buscar produtor por Id")
+    @GetMapping("/{id}")
+    public ResponseEntity<ProdutorDto> cadastrarProdutor(@PathVariable("id") UUID produtorId){
+        ProdutorDto produtorDto = produtorService.buscarPorId(produtorId);
+
+        return ResponseEntity.ok(produtorDto);
     }
 }
