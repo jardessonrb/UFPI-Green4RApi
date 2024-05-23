@@ -3,6 +3,7 @@ package com.jrblab.green4rapi.service.coletor.impl;
 import com.jrblab.green4rapi.domain.dto.in.ColetorForm;
 import com.jrblab.green4rapi.domain.dto.in.ProdutorForm;
 import com.jrblab.green4rapi.domain.dto.out.ColetorDto;
+import com.jrblab.green4rapi.domain.enums.TipoUsuario;
 import com.jrblab.green4rapi.domain.model.Coletor;
 import com.jrblab.green4rapi.domain.model.Endereco;
 import com.jrblab.green4rapi.domain.model.Usuario;
@@ -10,6 +11,7 @@ import com.jrblab.green4rapi.domain.repository.ColetorRepository;
 import com.jrblab.green4rapi.domain.repository.UsuarioRepository;
 import com.jrblab.green4rapi.service.coletor.ColetorService;
 import com.jrblab.green4rapi.shared.handlerexception.exception.EntityAlreadyExistException;
+import com.jrblab.green4rapi.shared.handlerexception.exception.EntityNotFoundException;
 import com.jrblab.green4rapi.shared.parser.ColetorParser;
 import com.jrblab.green4rapi.shared.parser.EnderecoParser;
 import com.jrblab.green4rapi.shared.parser.UsuarioParser;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ColetorServiceImpl implements ColetorService {
@@ -51,10 +54,21 @@ public class ColetorServiceImpl implements ColetorService {
         return ColetorParser.toDto(coletor);
     }
 
+    @Override
+    public ColetorDto buscarPorId(UUID coletorId) {
+        Coletor coletor = coletorRepository
+                .findByUuid(coletorId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Coletor não encontrado para o id "+coletorId)
+                );
+
+        return ColetorParser.toDto(coletor);
+    }
+
     private Usuario salvarUsuario(ColetorForm coletorForm){
         Endereco endereco = EnderecoParser.toModel(coletorForm.endereco());
         Usuario usuario = UsuarioParser.toModel(coletorForm.usuario());
-
+        usuario.setTipoUsuario(TipoUsuario.COLETOR);
         usuario.setEndereco(endereco);
 
         return usuarioRepository.save(usuario);

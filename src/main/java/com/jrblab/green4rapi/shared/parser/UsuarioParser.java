@@ -13,7 +13,6 @@ public class UsuarioParser {
                 .builder()
                 .nomeUsuario(usuarioForm.nomeUsuario())
                 .emailUsuario(usuarioForm.emailUsuario())
-                .tipoUsuario(TipoUsuario.PRODUTOR)
                 .senhaUsuario(usuarioForm.senhaUsuario())
                 .build();
     }
